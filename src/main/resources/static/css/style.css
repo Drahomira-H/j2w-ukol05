@@ -99,6 +99,11 @@ a:hover .vizitka {
     text-decoration: underline;
 }
 
+.error {
+    color: red;
+    font-style: italic;
+}
+
 .mapa {
     width: 36em;
     height: 36em;
