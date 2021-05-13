@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.EnumSet;
+import java.util.Objects;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
@@ -21,14 +22,14 @@ public class RegistraceForm {
     private LocalDate datumNarozeni;
     @NotNull
     private PohlaviEnum pohlavi;
-    private  EnumSet<SportEnum>  sport;
+    private EnumSet<SportEnum> sport;
     @NotNull
     private String turnus;
     @Email
     private String email;
     private String telefon;
 
-    public RegistraceForm(String jmeno, String prijmeni, LocalDate datumNarozeni, PohlaviEnum pohlavi, EnumSet<SportEnum>  sport, String turnus, String email, String telefon) {
+    public RegistraceForm(String jmeno, String prijmeni, LocalDate datumNarozeni, PohlaviEnum pohlavi, EnumSet<SportEnum> sport, String turnus, String email, String telefon) {
         this.jmeno = jmeno;
         this.prijmeni = prijmeni;
         this.datumNarozeni = datumNarozeni;

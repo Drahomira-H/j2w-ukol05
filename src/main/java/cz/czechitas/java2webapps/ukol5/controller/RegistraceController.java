@@ -19,44 +19,42 @@ import java.time.Period;
 @RequestMapping("")
 public class RegistraceController {
 
-  @GetMapping("")
-  public ModelAndView form() {
-    ModelAndView modelAndView = new ModelAndView("formular");
-    modelAndView.addObject("form", new RegistraceForm());
-    return modelAndView;
-  }
-
-  @PostMapping("")
-  public Object form(@ModelAttribute("form") @Valid RegistraceForm form, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-      return "/formular";
+    @GetMapping("")
+    public ModelAndView form() {
+        ModelAndView modelAndView = new ModelAndView("formular");
+        modelAndView.addObject("form", new RegistraceForm());
+        return modelAndView;
     }
 
-    Period period = form.getDatumNarozeni().until(LocalDate.now());
-    int vek = period.getYears();
+    @PostMapping("")
+    public Object form(@ModelAttribute("form") @Valid RegistraceForm form, BindingResult bindingResult) {
 
-    if (vek < 9 || vek > 15 || form.getSport().size() < 2) {
-      if (vek < 9 || vek > 15) {
-        bindingResult.rejectValue("datumNarozeni", "", "Tábor je pro děti od 9 do 15 let!");
-      }
+        Period period = form.getDatumNarozeni().until(LocalDate.now());
+        int vek = period.getYears();
 
-      if (form.getSport().size() < 2) {
-        bindingResult.rejectValue("sport", "", "Vyberte alespoň dva sporty");
-      }
-      return "/formular";}
+        if (vek < 9 || vek > 15) {
+            bindingResult.rejectValue("datumNarozeni", "", "Tábor je pro děti od 9 do 15 let!");
+        }
 
+        if (form.getSport() == null || form.getSport().size() < 2) {
+            bindingResult.rejectValue("sport", "", "Vyberte alespoň dva sporty");
+        }
 
-    return new ModelAndView("/registrovano")
-            .addObject("jmeno", form.getJmeno())
-            .addObject("prijmeni", form.getPrijmeni())
-            .addObject("narozeni", form.getDatumNarozeni())
-            .addObject("pohlavi", form.getPohlavi())
-            .addObject("sport", form.getSport())
-            .addObject("turnus", form.getTurnus())
-            .addObject("email", form.getEmail())
-            .addObject("telefon", form.getTelefon());
+        if (bindingResult.hasErrors()) {
+            return "formular";
+        } else {
+            return new ModelAndView("/registrovano")
+                    .addObject("jmeno", form.getJmeno())
+                    .addObject("prijmeni", form.getPrijmeni())
+                    .addObject("narozeni", form.getDatumNarozeni())
+                    .addObject("pohlavi", form.getPohlavi())
+                    .addObject("sport", form.getSport())
+                    .addObject("turnus", form.getTurnus())
+                    .addObject("email", form.getEmail())
+                    .addObject("telefon", form.getTelefon());
+        }
 
-  }
+    }
 
 
 }
